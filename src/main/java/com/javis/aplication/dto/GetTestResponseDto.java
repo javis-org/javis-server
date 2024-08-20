@@ -5,6 +5,7 @@ import lombok.Builder;
 
 @Builder
 public record GetTestResponseDto(
+        // ㅅ
         Long id,
         String name,
         String description
