@@ -25,7 +25,7 @@ public class AnswerEntity {
             nullable = false)
     private QuestionEntity question;
 
-    @Column(name = "answer")
+    @Column(name = "answer", nullable = false, length = 15000)
     public String answer;
 
     @Column(name = "created_at", nullable = false)

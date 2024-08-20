@@ -3,7 +3,9 @@ package com.javis.aplication.controller;
 import com.javis.aplication.dto.RegisterRequestDto;
 import com.javis.aplication.service.MemberService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -19,14 +21,27 @@ public class MemberController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     @Operation(summary = "회원가입 API")
-    public Long register(@RequestBody RegisterRequestDto registerRequestDto){
+    public Long register(@RequestBody @Valid RegisterRequestDto registerRequestDto){
         return memberService.save(registerRequestDto);
     }
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
     @Operation(summary = "로그인 API")
-    public Long login(@RequestParam String email, @RequestParam String password){
+    public Long login(
+            @RequestParam
+            @Parameter(
+                    name = "이메일",
+                    description = "이메일입니다.",
+                    required = true)
+            String email,
+
+            @RequestParam
+            @Parameter(
+                    name = "패스워드",
+                    description = "패스워드입니다.",
+                    required = true)
+            String password){
         return memberService.login(email, password);
     }
 

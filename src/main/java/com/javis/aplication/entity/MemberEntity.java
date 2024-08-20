@@ -19,12 +19,12 @@ public class MemberEntity {
     @GeneratedValue(strategy = GenerationType.AUTO)
     public Long id;
 
-    @Column(name = "email", nullable = false)
+    @Column(name = "email", nullable = false, length = 50)
     public String email;
 
-    @Column(name = "password", nullable = false)
+    @Column(name = "password", nullable = false, length = 20)
     public String password;
 
-    @Column(name = "name", nullable = false)
+    @Column(name = "name", nullable = false, length = 20)
     public String name;
 }

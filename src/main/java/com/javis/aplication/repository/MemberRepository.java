@@ -1,7 +1,7 @@
 package com.javis.aplication.repository;
 
 import com.javis.aplication.entity.MemberEntity;
-import com.javis.aplication.exception.MemberException;
+import com.javis.aplication.exception.MemberException.MemberNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
@@ -16,6 +16,6 @@ public class MemberRepository {
     }
 
     public MemberEntity findByEmailAndPassword(String email, String password) {
-        return jpaRepository.findByEmailAndPassword(email, password).orElseThrow(MemberException.MemberNotFoundException::new);
+        return jpaRepository.findByEmailAndPassword(email, password).orElseThrow(MemberNotFoundException::new);
     }
 }
