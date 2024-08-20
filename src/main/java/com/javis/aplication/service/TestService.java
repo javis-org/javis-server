@@ -1,6 +1,6 @@
 package com.javis.aplication.service;
 
-import com.javis.aplication.dto.PostTestRequestDto;
+import com.javis.aplication.dto.request.PostTestRequestDto;
 import com.javis.aplication.entity.TestEntity;
 import com.javis.aplication.repository.TestRepository;
 import lombok.RequiredArgsConstructor;

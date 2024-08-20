@@ -17,6 +17,13 @@ public class QuestionEntity {
     @GeneratedValue(strategy = GenerationType.AUTO)
     public Long id;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(
+            name = "answer_id",
+            nullable = false,
+            foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT))
+    private AnswerEntity answer;
+
     @Column(name = "question", nullable = false)
     public String question;
 

@@ -1,7 +1,7 @@
 package com.javis.aplication.controller;
 
-import com.javis.aplication.dto.GetTestResponseDto;
-import com.javis.aplication.dto.PostTestRequestDto;
+import com.javis.aplication.dto.response.GetTestResponseDto;
+import com.javis.aplication.dto.request.PostTestRequestDto;
 import com.javis.aplication.service.TestService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;

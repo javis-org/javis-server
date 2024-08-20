@@ -2,16 +2,20 @@ package com.javis.aplication.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "job_postings")
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
+@Builder
 public class JobPostingEntity {
 
     @Id
@@ -22,20 +26,15 @@ public class JobPostingEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(
             name = "member_id",
-            nullable = false)
+            nullable = false,
+            foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT))
     private MemberEntity member;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(
-            name = "answer_id",
-            nullable = false)
-    private AnswerEntity answer;
 
     @Column(name = "title", nullable = false)
     public String title;
 
-    @Column(name = "compony", nullable = false)
-    public String compony;
+    @Column(name = "company", nullable = false)
+    public String company;
 
     @Column(name = "description")
     public String description;

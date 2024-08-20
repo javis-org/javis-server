@@ -29,7 +29,7 @@ public class GemController {
         if (cleanJsonString.startsWith("```") && cleanJsonString.endsWith("```")) {
             cleanJsonString = cleanJsonString.substring(7, cleanJsonString.length() - 3).trim();
         }
-        System.out.println(cleanJsonString);
+//        System.out.println(cleanJsonString);
 //        GemResponseDto gemResponseDto = GemResponseDto.from(cleanJsonString);
 
 

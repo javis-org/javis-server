@@ -1,4 +1,4 @@
-package com.javis.aplication.dto;
+package com.javis.aplication.dto.request;
 
 import com.javis.aplication.entity.TestEntity;
 

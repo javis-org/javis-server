@@ -21,9 +21,10 @@ public class AnswerEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(
-            name = "question_id",
-            nullable = false)
-    private QuestionEntity question;
+            name = "job_posting_id",
+            nullable = false,
+            foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT))
+    private JobPostingEntity jobPosting;
 
     @Column(name = "answer", nullable = false, length = 15000)
     public String answer;
