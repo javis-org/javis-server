@@ -43,4 +43,9 @@ public class JobPostingController {
     ){
         return jobPostingService.findAll(memberId);
     }
+
+    @GetMapping("/{jobPostingId}")
+    public JobPostingResponseDto findById(@PathVariable Long jobPostingId){
+        return jobPostingService.findById(jobPostingId);
+    }
 }

@@ -1,6 +1,7 @@
 package com.javis.aplication.repository;
 
 import com.javis.aplication.entity.JobPostingEntity;
+import com.javis.aplication.exception.JobPostingException.JobPostingNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
@@ -17,5 +18,9 @@ public class JobPostingRepository {
 
     public List<JobPostingEntity> findAllByMemberId(Long memberId) {
         return jobPostingJpaRepository.findAllByMemberId(memberId);
+    }
+
+    public JobPostingEntity findById(Long id) {
+        return jobPostingJpaRepository.findById(id).orElseThrow(JobPostingNotFoundException::new);
     }
 }

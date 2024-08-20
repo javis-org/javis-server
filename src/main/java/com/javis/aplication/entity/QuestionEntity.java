@@ -20,7 +20,8 @@ public class QuestionEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(
             name = "answer_id",
-            nullable = false)
+            nullable = false,
+            foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT))
     private AnswerEntity answer;
 
     @Column(name = "question", nullable = false)
