@@ -1,6 +1,7 @@
 package com.javis.aplication.controller;
 
-import com.javis.aplication.dto.RegisterRequestDto;
+import com.javis.aplication.dto.request.LoginRequestDto;
+import com.javis.aplication.dto.request.RegisterRequestDto;
 import com.javis.aplication.service.MemberService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -25,24 +26,11 @@ public class MemberController {
         return memberService.save(registerRequestDto);
     }
 
-    @GetMapping
+    @PostMapping("/login")
     @ResponseStatus(HttpStatus.OK)
     @Operation(summary = "로그인 API")
-    public Long login(
-            @RequestParam
-            @Parameter(
-                    name = "이메일",
-                    description = "이메일입니다.",
-                    required = true)
-            String email,
-
-            @RequestParam
-            @Parameter(
-                    name = "패스워드",
-                    description = "패스워드입니다.",
-                    required = true)
-            String password){
-        return memberService.login(email, password);
+    public Long login(@RequestBody @Valid LoginRequestDto loginRequestDto){
+        return memberService.login(loginRequestDto);
     }
 
 }

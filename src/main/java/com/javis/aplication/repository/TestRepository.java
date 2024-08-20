@@ -1,6 +1,6 @@
 package com.javis.aplication.repository;
 
-import com.javis.aplication.dto.PostTestRequestDto;
+import com.javis.aplication.dto.request.PostTestRequestDto;
 import com.javis.aplication.entity.TestEntity;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;

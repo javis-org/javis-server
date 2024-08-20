@@ -1,4 +1,4 @@
-package com.javis.aplication.dto;
+package com.javis.aplication.dto.request;
 
 import com.javis.aplication.entity.MemberEntity;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -6,7 +6,7 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import org.hibernate.validator.constraints.Length;
 
-public record RegisterRequestDto(
+public record LoginRequestDto(
         @NotNull(message = "이메일은 필수 값입니다.")
         @Pattern(regexp = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$",
                 message = "[test@naver.com] 형식을 지켜주세요.")
@@ -17,19 +17,13 @@ public record RegisterRequestDto(
         @NotNull(message = "비밀번호는 필수 값입니다.")
         @Schema(description = "비밀번호입니다.")
         @Length(max = 20)
-        String password,
-
-        @NotNull(message = "이름은 필수 값입니다.")
-        @Schema(description = "이름입니다.")
-        @Length(max = 20)
-        String name
+        String password
 ) {
 
     public MemberEntity toMemberEntity() {
         return MemberEntity.builder()
                 .email(email)
                 .password(password)
-                .name(name)
                 .build();
     }
 
