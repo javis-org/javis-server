@@ -12,8 +12,6 @@ public class WebConfig implements WebMvcConfigurer {
         registry.addMapping("/**") // 모든 경로에 대해 CORS 허용
                 .allowedOrigins("*") // 허용할 출처
                 .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS") // 허용할 HTTP 메소드
-                .allowedHeaders("*") // 허용할 헤더
-                .allowCredentials(true) // 인증 정보 허용
-                .maxAge(3600); // preflight 요청의 캐시 기간
+                .allowedHeaders("*"); // 허용할 헤더
     }
 }
