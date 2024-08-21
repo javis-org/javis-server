@@ -2,6 +2,7 @@ package com.javis.aplication.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -12,6 +13,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
+@Builder
 public class AnswerEntity {
 
     @Id
@@ -21,10 +23,10 @@ public class AnswerEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(
-            name = "job_posting_id",
+            name = "question_id",
             nullable = false,
             foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT))
-    private JobPostingEntity jobPosting;
+    private QuestionEntity question;
 
     @Column(name = "answer", nullable = false, length = 15000)
     public String answer;

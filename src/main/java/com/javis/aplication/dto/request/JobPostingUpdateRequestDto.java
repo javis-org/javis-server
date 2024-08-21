@@ -22,7 +22,7 @@ public record JobPostingUpdateRequestDto(
         String company,
 
         @Schema(description = "작성하고 싶은 세부 내용입니다.")
-        String descrption
+        String description
 ) {
 
     public JobPostingEntity toJobPostingEntity(){
@@ -30,7 +30,7 @@ public record JobPostingUpdateRequestDto(
                 .id(id)
                 .title(title)
                 .company(company)
-                .description(descrption)
+                .description(description)
                 .updatedAt(LocalDateTime.now())
                 .build();
     }

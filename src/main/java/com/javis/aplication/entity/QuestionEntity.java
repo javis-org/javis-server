@@ -2,6 +2,7 @@ package com.javis.aplication.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -10,6 +11,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
+@Builder
 public class QuestionEntity {
 
     @Id
@@ -19,10 +21,10 @@ public class QuestionEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(
-            name = "answer_id",
+            name = "job_posting_id",
             nullable = false,
             foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT))
-    private AnswerEntity answer;
+    private JobPostingEntity jobPosting;
 
     @Column(name = "question", nullable = false)
     public String question;

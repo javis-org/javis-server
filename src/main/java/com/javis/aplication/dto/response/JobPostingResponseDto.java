@@ -10,7 +10,7 @@ public record JobPostingResponseDto(
         Long id,
         String title,
         String company,
-        String descrption,
+        String description,
         LocalDateTime createdAt,
         LocalDateTime updatedAt
 ) {
@@ -19,7 +19,7 @@ public record JobPostingResponseDto(
                 .id(jobPostingEntity.getId())
                 .title(jobPostingEntity.title)
                 .company(jobPostingEntity.company)
-                .descrption(jobPostingEntity.description)
+                .description(jobPostingEntity.description)
                 .createdAt(jobPostingEntity.createdAt)
                 .updatedAt(jobPostingEntity.updatedAt)
                 .build();
