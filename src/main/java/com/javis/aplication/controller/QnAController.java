@@ -22,8 +22,8 @@ public class QnAController {
     @PostMapping("/{jobPosting}")
     @ResponseStatus(HttpStatus.CREATED)
     @Operation(summary = "QnA 추가 API")
-    public int create(@RequestBody List<QnARequestDto> qnARequestDtoList, @PathVariable("jobPosting") Long jobPostingId) {
-        return qnAService.create(qnARequestDtoList, jobPostingId);
+    public int create(@RequestBody QnARequestDto qnARequestDto, @PathVariable("jobPosting") Long jobPostingId) {
+        return qnAService.create(qnARequestDto, jobPostingId);
     }
 
     @GetMapping

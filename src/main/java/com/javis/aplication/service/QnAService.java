@@ -24,15 +24,9 @@ public class QnAService {
     private final AnswerRepository answerRepository;
 
     @Transactional
-    public int create(List<QnARequestDto> qnARequestDtoList, Long jobPostindId){
-        List<QuestionEntity> questionRequestDtoList = qnARequestDtoList.stream()
-                .map(QuestionRequestDto::from)
-                .map(questionRequestDto -> questionRepository.save(questionRequestDto.toQuestionEntity(jobPostindId)))
-                .toList();
-        List<AnswerEntity> answerRequestDtoList = qnARequestDtoList.stream()
-                .map(AnswerRequestDto::from)
-                .map(answerRequestDto -> answerRepository.save(answerRequestDto.toAnswerEntity()))
-                .toList();
+    public int create(QnARequestDto qnARequestDto, Long jobPostindId){
+        QuestionEntity questionRequestDto = questionRepository.save(QuestionRequestDto.from(qnARequestDto).toQuestionEntity(jobPostindId));
+        answerRepository.save(AnswerRequestDto.from(qnARequestDto).toAnswerEntity(questionRequestDto));
         return 1;
     }
 

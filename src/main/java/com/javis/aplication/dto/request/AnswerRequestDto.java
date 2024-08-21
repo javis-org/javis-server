@@ -1,6 +1,7 @@
 package com.javis.aplication.dto.request;
 
 import com.javis.aplication.entity.AnswerEntity;
+import com.javis.aplication.entity.QuestionEntity;
 import lombok.Builder;
 
 import java.time.LocalDateTime;
@@ -20,9 +21,10 @@ public record AnswerRequestDto(
                 .build();
     }
 
-    public AnswerEntity toAnswerEntity(){
+    public AnswerEntity toAnswerEntity(QuestionEntity questionEntity){
         return AnswerEntity.builder()
                 .answer(answer)
+                .question(questionEntity)
                 .createdAt(LocalDateTime.now())
                 .build();
     }
