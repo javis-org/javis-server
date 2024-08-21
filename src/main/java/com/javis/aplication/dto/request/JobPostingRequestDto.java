@@ -24,7 +24,7 @@ public record JobPostingRequestDto(
         String company,
 
         @Schema(description = "작성하고 싶은 세부 내용입니다.")
-        String descrption
+        String description
 ) {
 
     public JobPostingEntity toJobPostingEntity(){
@@ -34,7 +34,7 @@ public record JobPostingRequestDto(
                         .build())
                 .title(title)
                 .company(company)
-                .description(descrption)
+                .description(description)
                 .createdAt(LocalDateTime.now())
                 .build();
     }

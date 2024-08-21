@@ -6,6 +6,8 @@ import com.javis.aplication.exception.MemberException.MEMBER_EMAIL_CONFLICT;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
+
 
 @Repository
 @RequiredArgsConstructor
@@ -24,7 +26,7 @@ public class MemberRepository {
         return jpaRepository.findById(id).orElseThrow(MemberNotFoundException::new);
     }
 
-    public MemberEntity findByEmail(String email) {
-        return jpaRepository.findByEmail(email).orElseThrow(MEMBER_EMAIL_CONFLICT::new);
+    public Optional<MemberEntity> findByEmail(String email) {
+        return jpaRepository.findByEmail(email);
     }
 }
