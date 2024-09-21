@@ -55,4 +55,15 @@ public class JobPostingController {
     public JobPostingResponseDto findById(@PathVariable Long jobPostingId){
         return jobPostingService.findById(jobPostingId);
     }
+
+    @DeleteMapping
+    @ResponseStatus(HttpStatus.OK)
+    @Operation(summary = "JD 삭제 API")
+    public void delete(
+            @RequestParam
+            Long jobPostingId
+            ){
+        jobPostingService.delete(jobPostingId);
+    }
+
 }

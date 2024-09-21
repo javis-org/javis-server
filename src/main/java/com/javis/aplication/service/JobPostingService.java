@@ -41,4 +41,8 @@ public class JobPostingService {
     public JobPostingResponseDto findById(Long id) {
         return JobPostingResponseDto.from(jobPostingRepository.findById(id));
     }
+
+    public void delete(Long jobPostingId){
+        jobPostingRepository.delete(jobPostingId);
+    }
 }

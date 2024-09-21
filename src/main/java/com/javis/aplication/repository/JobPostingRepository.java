@@ -23,4 +23,10 @@ public class JobPostingRepository {
     public JobPostingEntity findById(Long id) {
         return jobPostingJpaRepository.findById(id).orElseThrow(JobPostingNotFoundException::new);
     }
+
+    public void delete(Long jobPostingId){
+        JobPostingEntity jobPostingEntity = JobPostingEntity.builder()
+                .id(jobPostingId).build();
+        jobPostingJpaRepository.delete(jobPostingEntity);
+    }
 }
