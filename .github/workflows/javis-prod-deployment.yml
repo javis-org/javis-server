@@ -54,7 +54,15 @@ jobs: # 동일한 러너에서 실행되는 steps의 집합
           password: ${{ secrets.PROD_SERVER_PASSWORD }}
           port: ${{ secrets.PROD_SERVER_PORT }}
           script: |
-            java -jar /home/ubuntu/javis/javis-server-0.0.1-SNAPSHOT.jar
+            echo "DB_URL=$DB_URL" >> .env
+            echo "DB_USERNAME=$DB_USERNAME" >> .env
+            echo "DB_PASSWORD=$DB_PASSWORD" >> .env
+            export $(cat /home/ubuntu/javis/.env | xargs) && java -jar /home/ubuntu/javis/javis-server-0.0.1-SNAPSHOT.jar
+        env:
+            DB_URL: ${{ secrets.DB_URL }}
+            DB_USERNAME: ${{ secrets.DB_USERNAME }}
+            DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+            
       #     # deploy 완료 시 discord 채팅 알림 추가하기
       # - name:
       #   uses: 디스코드 추가
