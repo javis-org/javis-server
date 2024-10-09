@@ -35,7 +35,7 @@ jobs: # 동일한 러너에서 실행되는 steps의 집합
         run: |
             mkdir -p ~/.ssh
             echo "${{ secrets.PROD_SERVER_SSH_PRIVATE_KEY_PEM }}" > ~/.ssh/private_key
-            chmod 600 ~/private_key
+            chmod 600 ~/.ssh/private_key
             
       - name: Add SSH Key to known_hosts
         run: |
