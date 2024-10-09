@@ -15,12 +15,20 @@ jobs: # 동일한 러너에서 실행되는 steps의 집합
 
       - name: Gradle Permission # 없으면 permission denied 뜸
         run: chmod +x ./gradlew
-          
+
+      - name: Env Setting
+        run: |
+            echo "DB_URL=$DB_URL" >> .env
+            echo "DB_USERNAME=$DB_USERNAME" >> .env
+            echo "DB_PASSWORD=$DB_PASSWORD" >> .env
+        env:
+            DB_URL: ${{ secrets.DB_URL }}
+            DB_USERNAME: ${{ secrets.DB_USERNAME }}
+            DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+        
+      
       - name: Build JAR
         run: |
-            export DB_URL=${{ secrets.DB_URL }}
-            export DB_USERNAME=${{ secrets.DB_USERNAME }}
-            export DB_PASSWORD=${{ secrets.DB_PASSWORD }}
             ./gradlew clean build
 
       - name: Copy JAR to Server
