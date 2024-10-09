@@ -48,7 +48,7 @@ jobs: # 동일한 러너에서 실행되는 steps의 집합
       - name: Deploy to Prod - Oracle Cloud
         uses: appleboy/ssh-action@master
         with:
-          key: ${{ secrets.PROD_SERVER_SSH_PRIVATE_KEY }} # ssh 접속 프라이빗 키
+          key: ${{ secrets.PROD_SERVER_SSH_PRIVATE_KEY_PEM }} # ssh 접속 프라이빗 키
           host: ${{ secrets.PROD_SERVER_HOST }}
           username: ${{ secrets.PROD_SERVER_USERNAME }}
           password: ${{ secrets.PROD_SERVER_PASSWORD }}
