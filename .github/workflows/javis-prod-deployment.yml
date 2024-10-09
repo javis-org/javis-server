@@ -1,0 +1,43 @@
+name: Javis Prod Deployment
+
+on: # 메인에 풀리퀘나 푸쉬하면 CD 실행
+    push:
+      branches: [ main ]
+    pull_request:
+      branches: [ main ]
+
+jobs: # 동일한 러너에서 실행되는 steps의 집합
+  deploy: #job 이름
+    runs_on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Build JAR
+        run: |
+          ./gradlew clean build
+
+      - name: Copy JAR to Server
+        run: |
+          scp build/libs/javis-server-0.0.1-SNAPSHOT.jar ${{ secrets.PROD_SERVER_HOST }}@${{ secrets.PROD_SERVER_USERNAME }}:/home/ubuntu/javis
+      
+      - name: Deploy to Prod - Oracle Cloud
+        uses: appleboy/ssh-action@master
+        with:
+          key: ${{ secrets.PROD_SERVER_SSH_PRIVATE_KEY }} # ssh 접속 프라이빗 키
+          host: ${{ secrets.PROD_SERVER_HOST }}
+          username: ${{ secrets.PROD_SERVER_USERNAME }}
+          password: ${{ secrets.PROD_SERVER_PASSWORD }}
+          port: ${{ secrets.PROD_SERVER_PORT }}
+          script: |
+            java -jar /home/ubuntu/javis/javis-server-0.0.1-SNAPSHOT.jar
+      #     # deploy 완료 시 discord 채팅 알림 추가하기
+      # - name:
+      #   uses: 디스코드 추가
+      #   with:
+      #     status: ${{ job.status }} # 성공 실패 여부
+      #     author_name: GitHub actions deploy # 알림 메시지의 제목으로 사용될 이름
+      #     fields: repo, commit, message, author # 메시지에 보일 정보
+      #     mention: here #멘션할 대상
+      #   env:
+      #     SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
