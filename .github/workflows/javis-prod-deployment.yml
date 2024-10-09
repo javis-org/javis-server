@@ -9,10 +9,6 @@ on: # 메인에 풀리퀘나 푸쉬하면 CD 실행
 jobs: # 동일한 러너에서 실행되는 steps의 집합
   deploy: #job 이름
     runs-on: ubuntu-latest
-    env:
-      DB_URL: ${{ secrets.DB_URL }}
-      DB_USERNAME: ${{ secrets.DB_USERNAME }}
-      DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
@@ -21,7 +17,11 @@ jobs: # 동일한 러너에서 실행되는 steps의 집합
         run: chmod +x ./gradlew
           
       - name: Build JAR
-        run: ./gradlew clean build
+        run: |
+            export DB_URL=${{ secrets.DB_URL }}
+            export DB_USERNAME=${{ secrets.DB_USERNAME }}
+            export DB_PASSWORD=${{ secrets.DB_PASSWORD }}
+            ./gradlew clean build
 
       - name: Copy JAR to Server
         run: |
