@@ -31,10 +31,13 @@ jobs: # 동일한 러너에서 실행되는 steps의 집합
         run: |
             ./gradlew clean build
 
+      - name: Crate Private_key
+        run: |
+            echo "${{ secrets.PROD_SERVER_SSH_PRIVATE_KEY_PEM }}" > ~/private_key
+            chmod 600 ~/private_key
+            
       - name: Copy JAR to Server
         run: |
-          # echo "${{ secrets.PROD_SERVER_SSH_PRIVATE_KEY_PEM }}" > ~/private_key
-          # chmod 600 ~/private_key
           scp build/libs/javis-server-0.0.1-SNAPSHOT.jar ${{ secrets.PROD_SERVER_USERNAME }}@${{ secrets.PROD_SERVER_HOST }}:/home/${{ secrets.PROD_SERVER_USERNAME }}/javis
       
       - name: Deploy to Prod - Oracle Cloud
