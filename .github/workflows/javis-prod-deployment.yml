@@ -33,12 +33,17 @@ jobs: # 동일한 러너에서 실행되는 steps의 집합
 
       - name: Crate Private_key
         run: |
-            echo "${{ secrets.PROD_SERVER_SSH_PRIVATE_KEY_PEM }}" > ~/private_key
+            mkdir -p ~/.ssh
+            echo "${{ secrets.PROD_SERVER_SSH_PRIVATE_KEY_PEM }}" > ~/.ssh/private_key
             chmod 600 ~/private_key
+            
+      - name: Add SSH Key to known_hosts
+        run: |
+            ssh-keyscan -H ${{ secrets.PROD_SERVER_HOST }} >> ~/.ssh/known_hosts
             
       - name: Copy JAR to Server
         run: |
-          scp -i ~/private_key build/libs/javis-server-0.0.1-SNAPSHOT.jar ${{ secrets.PROD_SERVER_USERNAME }}@${{ secrets.PROD_SERVER_HOST }}:/home/${{ secrets.PROD_SERVER_USERNAME }}/javis
+          scp -i ~/.ssh/private_key build/libs/javis-server-0.0.1-SNAPSHOT.jar ${{ secrets.PROD_SERVER_USERNAME }}@${{ secrets.PROD_SERVER_HOST }}:/home/${{ secrets.PROD_SERVER_USERNAME }}/javis
       
       - name: Deploy to Prod - Oracle Cloud
         uses: appleboy/ssh-action@master
