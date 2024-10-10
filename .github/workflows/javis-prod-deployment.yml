@@ -3,8 +3,8 @@ name: Javis Prod Deployment
 on: # 메인에 풀리퀘나 푸쉬하면 CD 실행
     push:
       branches: [ main ]
-    pull_request:
-      branches: [ main ]
+    # pull_request: # Push랑 중복됨
+    #   branches: [ main ]
 
 jobs: # 동일한 러너에서 실행되는 steps의 집합
   deploy: #job 이름
