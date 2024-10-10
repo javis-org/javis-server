@@ -64,6 +64,16 @@ jobs: # 동일한 러너에서 실행되는 steps의 집합
             export DB_PASSWORD=${{ secrets.DB_PASSWORD }}
             export GPT_API_KEY=${{ secrets.GPT_API_KEY }}
             nohup java -jar ~/javis/javis-server-0.0.1-SNAPSHOT.jar > ~/javis/logs/app.log 2>&1 &
+            echo $! > ~/javis/javis-server.pid  # PID 저장
+
+            # 프로세스가 정상적으로 실행되었는지 확인
+            sleep 10  # 잠시 대기 (서버가 시작될 시간을 줌)
+            if ! ps -p $(cat ~/javis/javis-server.pid) > /dev/null; then
+                echo "Failed to start the application!"
+                exit 1  # 실패 시 종료
+            fi
+
+            echo "Application started successfully."
             
       #     # deploy 완료 시 discord 채팅 알림 추가하기
       # - name:
