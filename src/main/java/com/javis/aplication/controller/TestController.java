@@ -39,4 +39,13 @@ public class TestController {
         log.info("성공 : {}", getTestResponseDto);
         return getTestResponseDto;
     }
+
+    @ResponseStatus(HttpStatus.OK)
+    @PostMapping
+    @Operation(summary = "PUT 테스트 API")
+    public GetTestResponseDto putTest(@RequestBody PostTestRequestDto postTestRequestDto){
+        GetTestResponseDto getTestResponseDto = GetTestResponseDto.from(testService.save(postTestRequestDto));
+        log.info("성공 : {}", getTestResponseDto);
+        return getTestResponseDto;
+    }
 }
