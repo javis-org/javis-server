@@ -41,7 +41,7 @@ public class TestController {
     }
 
     @ResponseStatus(HttpStatus.OK)
-    @PostMapping
+    @PutMapping
     @Operation(summary = "PUT 테스트 API")
     public GetTestResponseDto putTest(@RequestBody PostTestRequestDto postTestRequestDto){
         GetTestResponseDto getTestResponseDto = GetTestResponseDto.from(testService.save(postTestRequestDto));
