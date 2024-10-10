@@ -25,6 +25,7 @@ public class JobPostingController {
     @ResponseStatus(HttpStatus.CREATED)
     @Operation(summary = "JD 추가 API")
     public JobPostingResponseDto create(JobPostingRequestDto jobPostingRequestDto){
+        // CD Push 테스트용
         return jobPostingService.create(jobPostingRequestDto);
     }
 
