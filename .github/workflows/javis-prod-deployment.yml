@@ -63,7 +63,7 @@ jobs: # 동일한 러너에서 실행되는 steps의 집합
             export DB_USERNAME=${{ secrets.DB_USERNAME }}
             export DB_PASSWORD=${{ secrets.DB_PASSWORD }}
             export GPT_API_KEY=${{ secrets.GPT_API_KEY }}
-            nohup java -jar ~/javis/javis-server-0.0.1-SNAPSHOT.jar &
+            nohup java -jar ~/javis/javis-server-0.0.1-SNAPSHOT.jar > ~/javis/logs/app.log 2>&1 &
             
       #     # deploy 완료 시 discord 채팅 알림 추가하기
       # - name:
