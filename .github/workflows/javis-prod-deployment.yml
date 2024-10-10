@@ -44,6 +44,10 @@ jobs: # 동일한 러너에서 실행되는 steps의 집합
       - name: Copy JAR to Server
         run: |
           scp -i ~/.ssh/private_key build/libs/javis-server-0.0.1-SNAPSHOT.jar ${{ secrets.PROD_SERVER_USERNAME }}@${{ secrets.PROD_SERVER_HOST }}:/home/${{ secrets.PROD_SERVER_USERNAME }}/javis
+
+      - name: Stop Spring Boot Server
+        run: |
+          ssh -i ~/.ssh/private_key ${{ secrets.PROD_SERVER_USERNAME }}@${{ secrets.PROD_SERVER_HOST }} "sudo fuser -k 8080/tcp || true"
       
       - name: Deploy to Prod - Oracle Cloud
         uses: appleboy/ssh-action@master
