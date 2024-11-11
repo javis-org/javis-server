@@ -1,6 +1,6 @@
 package com.javis.aplication.dto.request;
 
-import com.javis.aplication.entity.MemberEntity;
+import com.javis.aplication.entity.MemberEntityV1;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
@@ -25,8 +25,8 @@ public record RegisterRequestDto(
         String name
 ) {
 
-    public MemberEntity toMemberEntity() {
-        return MemberEntity.builder()
+    public MemberEntityV1 toMemberEntity() {
+        return MemberEntityV1.builder()
                 .email(email)
                 .password(password)
                 .name(name)

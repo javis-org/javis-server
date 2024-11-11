@@ -7,8 +7,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
 @Table(name = "job_postings")
@@ -28,7 +26,7 @@ public class JobPostingEntity {
             name = "member_id",
             nullable = false,
             foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT))
-    private MemberEntity member;
+    private MemberEntityV1 member;
 
     @Column(name = "title", nullable = false)
     public String title;
