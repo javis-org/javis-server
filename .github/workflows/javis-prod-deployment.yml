@@ -1,0 +1,87 @@
+name: Javis Prod Deployment
+
+on: # 메인에 풀리퀘나 푸쉬하면 CD 실행
+    push:
+      branches: [ main ]
+    # pull_request: # Push랑 중복됨
+    #   branches: [ main ]
+
+jobs: # 동일한 러너에서 실행되는 steps의 집합
+  deploy: #job 이름
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Gradle Permission # 없으면 permission denied 뜸
+        run: chmod +x ./gradlew
+
+      - name: Env Setting
+        run: |
+            echo "DB_URL=$DB_URL" >> .env
+            echo "DB_USERNAME=$DB_USERNAME" >> .env
+            echo "DB_PASSWORD=$DB_PASSWORD" >> .env
+        env:
+            DB_URL: ${{ secrets.DB_URL }}
+            DB_USERNAME: ${{ secrets.DB_USERNAME }}
+            DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+        
+      
+      - name: Build JAR
+        run: |
+            ./gradlew clean build
+
+      - name: Crate Private_key
+        run: |
+            mkdir -p ~/.ssh
+            echo "${{ secrets.PROD_SERVER_SSH_PRIVATE_KEY_PEM }}" > ~/.ssh/private_key
+            chmod 600 ~/.ssh/private_key
+            
+      - name: Add SSH Key to known_hosts
+        run: |
+            ssh-keyscan -H ${{ secrets.PROD_SERVER_HOST }} >> ~/.ssh/known_hosts
+            
+      - name: Copy JAR to Server
+        run: |
+          scp -i ~/.ssh/private_key build/libs/javis-server-0.0.1-SNAPSHOT.jar ${{ secrets.PROD_SERVER_USERNAME }}@${{ secrets.PROD_SERVER_HOST }}:/home/${{ secrets.PROD_SERVER_USERNAME }}/javis
+
+      - name: Stop Spring Boot Server
+        run: |
+          ssh -i ~/.ssh/private_key ${{ secrets.PROD_SERVER_USERNAME }}@${{ secrets.PROD_SERVER_HOST }} "sudo fuser -k 8080/tcp || true"
+      
+      - name: Deploy to Prod - Oracle Cloud
+        uses: appleboy/ssh-action@master
+        with:
+          key: ${{ secrets.PROD_SERVER_SSH_PRIVATE_KEY_PEM }} # ssh 접속 프라이빗 키
+          host: ${{ secrets.PROD_SERVER_HOST }}
+          username: ${{ secrets.PROD_SERVER_USERNAME }}
+          password: ${{ secrets.PROD_SERVER_PASSWORD }}
+          port: ${{ secrets.PROD_SERVER_PORT }}
+          # TODO : 환경 변수 정리하는 방법 고민해보기
+          script: |
+            export DB_URL=${{ secrets.DB_URL }}
+            export DB_USERNAME=${{ secrets.DB_USERNAME }}
+            export DB_PASSWORD=${{ secrets.DB_PASSWORD }}
+            export GPT_API_KEY=${{ secrets.GPT_API_KEY }}
+            nohup java -jar ~/javis/javis-server-0.0.1-SNAPSHOT.jar > ~/javis/logs/app.log 2>&1 &
+            echo $! > ~/javis/javis-server.pid  # PID 저장
+
+            # 프로세스가 정상적으로 실행되었는지 확인
+            sleep 10  # 잠시 대기 (서버가 시작될 시간을 줌)
+            if ! ps -p $(cat ~/javis/javis-server.pid) > /dev/null; then
+                echo "Failed to start the application!"
+                exit 1  # 실패 시 종료
+            fi
+
+            echo "Application started successfully."
+            
+      #     # deploy 완료 시 discord 채팅 알림 추가하기
+      # - name:
+      #   uses: 디스코드 추가
+      #   with:
+      #     status: ${{ job.status }} # 성공 실패 여부
+      #     author_name: GitHub actions deploy # 알림 메시지의 제목으로 사용될 이름
+      #     fields: repo, commit, message, author # 메시지에 보일 정보
+      #     mention: here #멘션할 대상
+      #   env:
+      #     SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}

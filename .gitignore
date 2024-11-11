@@ -39,5 +39,5 @@ out/
 # applicaion
 **/application.yaml
 
-# .env
-.env
+#env
+**/*.env
