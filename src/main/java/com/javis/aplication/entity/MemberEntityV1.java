@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Getter
 @Builder
-public class MemberEntity {
+public class MemberEntityV1 {
 
     @Id
     @Column(name = "id", nullable = false)

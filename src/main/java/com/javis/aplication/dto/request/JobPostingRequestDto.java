@@ -1,11 +1,10 @@
 package com.javis.aplication.dto.request;
 
 import com.javis.aplication.entity.JobPostingEntity;
-import com.javis.aplication.entity.MemberEntity;
+import com.javis.aplication.entity.MemberEntityV1;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotNull;
 import lombok.Builder;
-import org.hibernate.validator.constraints.Length;
 
 import java.time.LocalDateTime;
 
@@ -29,7 +28,7 @@ public record JobPostingRequestDto(
 
     public JobPostingEntity toJobPostingEntity(){
         return JobPostingEntity.builder()
-                .member(MemberEntity.builder()
+                .member(MemberEntityV1.builder()
                         .id(memberId)
                         .build())
                 .title(title)
